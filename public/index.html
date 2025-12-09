@@ -2,56 +2,52 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contrôle ESP32</title>
+  <title>ESP32</title>
   <style>
     body {
+      margin: 0;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      background-color: #f0f0f0;
-      font-family: Arial, sans-serif;
+      background: #111;
+      font-family: Arial;
     }
 
     button {
-      padding: 20px 40px;
-      font-size: 24px;
-      cursor: pointer;
+      font-size: 32px;
+      padding: 30px 60px;
+      border-radius: 15px;
       border: none;
-      border-radius: 10px;
-      background-color: #4CAF50;
+      cursor: pointer;
+      background: red;
       color: white;
-      transition: background-color 0.3s;
-    }
-
-    button:hover {
-      background-color: #45a049;
     }
   </style>
 </head>
 <body>
-  <button id="toggleBtn">ON/OFF</button>
 
-  <script>
-    const btn = document.getElementById('toggleBtn');
+<button id="btn">OFF</button>
 
-    btn.addEventListener('click', () => {
-      // On récupère l'état actuel pour basculer
-      fetch('/state')
-        .then(response => response.text())
-        .then(state => {
-          const newState = state === 'ON' ? 'OFF' : 'ON';
-          return fetch(`/cmd/${newState}`);
-        })
-        .then(() => {
-          alert('Commande envoyée !');
-        })
-        .catch(err => {
-          console.error(err);
-          alert('Erreur lors de l’envoi');
-        });
-    });
-  </script>
+<script>
+  const btn = document.getElementById("btn");
+
+  function refresh() {
+    fetch("/state")
+      .then(r => r.text())
+      .then(state => {
+        btn.innerText = state;
+        btn.style.background = state === "ON" ? "green" : "red";
+      });
+  }
+
+  btn.onclick = () => {
+    const next = btn.innerText === "ON" ? "OFF" : "ON";
+    fetch("/cmd/" + next).then(refresh);
+  };
+
+  refresh();
+</script>
+
 </body>
 </html>
