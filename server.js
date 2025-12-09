@@ -4,8 +4,8 @@ const app = express();
 
 let lastCmd = "OFF";
 
-// Servir le dossier "public"
-app.use(express.static(path.join(__dirname, "public")));
+// 🔥 AJOUTE CETTE LIGNE
+app.use(express.static("public"));
 
 app.get("/cmd/:value", (req, res) => {
   lastCmd = req.params.value;
