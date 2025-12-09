@@ -1,7 +1,6 @@
 {
-  "name": "esp32-http-server",
+  "name": "esp32-server",
   "version": "1.0.0",
-  "description": "Serveur HTTP pour ESP32",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
