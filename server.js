@@ -1,11 +1,11 @@
 const express = require("express");
+const path = require("path");
 const app = express();
 
 let lastCmd = "OFF";
 
-app.get("/", (req, res) => {
-  res.send("Serveur ESP32 OK");
-});
+// Servir le dossier "public"
+app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/cmd/:value", (req, res) => {
   lastCmd = req.params.value;
